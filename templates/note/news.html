@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IT News</title>
+</head>
+<body>
+    <h1>Свежие новости IT</h1>
+    <ul>
+        {% for news in it_news %}
+            <li>
+                <h2>{{ news.title }}</h2>
+                <a href="{{ news.url }}" target="_blank">Подробнее</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
