@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -26,6 +27,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "note.apps.NoteConfig",
+    "user.apps.UserConfig",
+
 ]
 
 MIDDLEWARE = [
@@ -43,7 +48,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -114,3 +119,21 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/notes/"
+LOGOUT_REDIRECT_URL = "/notes/"
+
+if DEBUG or 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv('REDIS_LOCATION'),
+            'TIMEOUT': 300
+        }
+    }
