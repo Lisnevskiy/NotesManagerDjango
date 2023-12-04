@@ -11,6 +11,6 @@
         {% csrf_token %}
         <button type="submit">Confirm Delete</button>
     </form>
-    <a href="{% url 'note-detail' object.pk %}">Cancel</a>
+    <a href="{% url 'note:note_detail' note.pk %}">Cancel</a>
 </body>
 </html>
